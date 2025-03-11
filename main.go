@@ -1,7 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"github.com/coregate/tickets-app/routes"
+	"github.com/gin-gonic/gin"
+)
 
 func main() {
-	fmt.Println("Hello, World!")
+	server := gin.New()
+	routes.RegisterRoutes(server)
+
+	server.Run(":8000")
 }
