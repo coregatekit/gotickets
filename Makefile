@@ -1,3 +1,16 @@
+# App Configs
+export APP_NAME=go-tickets
+export APP_VERSION=1.0.0
+export APP_PORT=8000
+export APP_ENV=development
+
+# Database Configs
+export DB_HOST=localhost
+export DB_PORT=5432
+export DB_USER=antman
+export DB_PASSWORD=3l}MSk1wg?7[
+export DB_NAME=tickets
+
 run:
 	go run main.go
 
