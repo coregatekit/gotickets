@@ -8,7 +8,7 @@ export APP_ENV=development
 export DB_HOST=localhost
 export DB_PORT=5432
 export DB_USER=antman
-export DB_PASSWORD=3l}MSk1wg?7[
+export DB_PASSWORD=3lMSkQr1wg7
 export DB_NAME=tickets
 
 run:
@@ -28,3 +28,20 @@ test:
 
 lint:
 	golangci-lint run 
+
+# Migrations
+dbConnectionString="postgres://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)?sslmode=disable"
+# run with 'make migrate-create name=<migration_name>'
+migrate-create:
+	migrate create -ext sql -dir database/migrations -seq $(name)
+
+migrate-up:
+	migrate -database $(dbConnectionString) -path database/migrations up
+migrate-down:
+	migrate -database $(dbConnectionString) -path database/migrations down
+# run with 'make migrate-up version=<number_of_migrations>'
+migrate-up-to:
+	migrate -database $(dbConnectionString) -path database/migrations up $(version)
+# run with 'make migrate-down version=<number_of_migrations>'
+migrate-down-to:
+	migrate -database $(dbConnectionString) -path database/migrations down $(version)

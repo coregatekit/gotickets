@@ -1,0 +1,2 @@
+DROP SCHEMA auth;
+DROP SCHEMA tickets;
