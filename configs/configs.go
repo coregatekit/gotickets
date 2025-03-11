@@ -23,7 +23,7 @@ type (
 	}
 )
 
-func NewConfigs() (*Configs, error) {
+func NewConfigs() *Configs {
 	viper.AutomaticEnv()
 
 	app := &App{
@@ -43,5 +43,5 @@ func NewConfigs() (*Configs, error) {
 	return &Configs{
 		App:      app,
 		Database: db,
-	}, nil
+	}
 }
