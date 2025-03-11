@@ -3,6 +3,7 @@ module github.com/coregate/tickets-app
 go 1.23.5
 
 require (
+	github.com/DATA-DOG/go-sqlmock v1.5.2 // indirect
 	github.com/KyleBanks/depth v1.2.1 // indirect
 	github.com/MarceloPetrucio/go-scalar-api-reference v0.0.0-20240521013641-ce5d2efe0e06 // indirect
 	github.com/PuerkitoBio/purell v1.1.1 // indirect
