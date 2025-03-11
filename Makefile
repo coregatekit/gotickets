@@ -36,9 +36,9 @@ migrate-create:
 	migrate create -ext sql -dir database/migrations -seq $(name)
 
 migrate-up:
-	migrate -database $(dbConnectionString) -path database/migrations up
+	migrate -database $(dbConnectionString) -path database/migrations up 1
 migrate-down:
-	migrate -database $(dbConnectionString) -path database/migrations down
+	migrate -database $(dbConnectionString) -path database/migrations down 1
 # run with 'make migrate-up version=<number_of_migrations>'
 migrate-up-to:
 	migrate -database $(dbConnectionString) -path database/migrations up $(version)
