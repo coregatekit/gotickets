@@ -3,7 +3,7 @@ services:
     image: postgres:17
     environment:
       POSTGRES_USER: antman
-      POSTGRES_PASSWORD: 3l}MSk1wg?7[
+      POSTGRES_PASSWORD: 3lMSkQr1wg7
       POSTGRES_DB: tickets
     ports:
       - "5432:5432"
