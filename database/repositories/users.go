@@ -15,12 +15,13 @@ func NewUsersRepository(dbConnection *gorm.DB) *UsersRepository {
 	}
 }
 
-func (r *UsersRepository) CreateUser(name, username, email, password string) (*users.User, error) {
+func (r *UsersRepository) CreateUser(data users.CreateUser) (*users.User, error) {
 	user := &users.User{
-		Name:     name,
-		Username: username,
-		Email:    email,
-		Password: password,
+		ID:       data.ID,
+		Name:     data.Name,
+		Username: data.Username,
+		Email:    data.Email,
+		Password: data.Password,
 	}
 
 	result := r.dbConnection.Table("auth.users").Create(user)
