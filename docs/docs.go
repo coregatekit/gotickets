@@ -15,31 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/health": {
-            "get": {
-                "description": "HealthCheck status is ready of service",
-                "tags": [
-                    "HealthCheck"
-                ],
-                "summary": "HealthCheck",
-                "operationId": "HealthCheck",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/auth/register": {
+        "/api/auth/register": {
             "post": {
                 "description": "Register new user",
                 "consumes": [
@@ -60,7 +36,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/users.CreateUser"
+                            "$ref": "#/definitions/auth.CreateUser"
                         }
                     }
                 ],
@@ -85,22 +61,34 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/health": {
+            "get": {
+                "description": "HealthCheck status is ready of service",
+                "tags": [
+                    "HealthCheck"
+                ],
+                "summary": "HealthCheck",
+                "operationId": "HealthCheck",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
-        "common.Response": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "integer"
-                },
-                "data": {},
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "users.CreateUser": {
+        "auth.CreateUser": {
             "type": "object",
             "properties": {
                 "email": {
@@ -113,6 +101,18 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "common.Response": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {},
+                "message": {
                     "type": "string"
                 }
             }

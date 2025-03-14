@@ -22,7 +22,7 @@ func NewAuthHandler(authService auth.IAuthService) *AuthHandler {
 // @Tags        Auth
 // @Accept		json
 // @Produce		json
-// @Param		body body users.CreateUser true "User data"
+// @Param		body body auth.CreateUser true "User data"
 // @Success 	200 {object} common.Response "OK"
 // @Failure		400 {object} common.Response "Bad Request"
 // @Failure		500 {object} common.Response "Internal Server Error"
