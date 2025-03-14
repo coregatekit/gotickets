@@ -18,7 +18,6 @@ func NewUsersRepository(dbConnection *gorm.DB) *UsersRepository {
 
 func (r *UsersRepository) CreateUser(data users.CreateUser) (*users.User, error) {
 	user := &users.User{
-		ID:       data.ID,
 		Name:     data.Name,
 		Username: data.Username,
 		Email:    data.Email,

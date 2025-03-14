@@ -7,6 +7,17 @@ definitions:
       message:
         type: string
     type: object
+  users.CreateUser:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
 info:
   contact: {}
 paths:
@@ -26,4 +37,35 @@ paths:
       summary: HealthCheck
       tags:
       - HealthCheck
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Register new user
+      operationId: Register
+      parameters:
+      - description: User data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/users.CreateUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Register
+      tags:
+      - Auth
 swagger: "2.0"
