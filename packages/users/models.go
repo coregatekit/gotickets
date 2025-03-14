@@ -26,10 +26,3 @@ func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
 	u.ID = cuid2.Generate()
 	return nil
 }
-
-type CreateUser struct {
-	Name     string `json:"name"`
-	Username string `json:"username"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
-}
