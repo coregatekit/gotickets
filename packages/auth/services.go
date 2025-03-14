@@ -4,7 +4,7 @@ import (
 	"github.com/coregate/tickets-app/packages/users"
 )
 
-type AuthService struct {
+type authService struct {
 	usersRepository users.IUserRepository
 }
 
@@ -13,11 +13,11 @@ type IAuthService interface {
 }
 
 func NewAuthService(userRepo users.IUserRepository) IAuthService {
-	return &AuthService{
+	return &authService{
 		usersRepository: userRepo,
 	}
 }
 
-func (s *AuthService) Register(data CreateUser) error {
+func (s *authService) Register(data CreateUser) error {
 	return nil
 }

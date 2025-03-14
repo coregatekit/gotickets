@@ -1,11 +1,18 @@
 package handlers
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/coregate/tickets-app/packages/auth"
+	"github.com/gin-gonic/gin"
+)
 
-type AuthHandler struct{}
+type AuthHandler struct {
+	authService auth.IAuthService
+}
 
-func NewAuthHandler() *AuthHandler {
-	return &AuthHandler{}
+func NewAuthHandler(authService auth.IAuthService) *AuthHandler {
+	return &AuthHandler{
+		authService: authService,
+	}
 }
 
 // GoTemplate 	godoc
