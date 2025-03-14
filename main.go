@@ -39,5 +39,8 @@ func main() {
 		fmt.Fprintln(c.Writer, htmlContent)
 	})
 
-	server.Run(":" + strconv.Itoa(int(configs.App.Port)))
+	err = server.Run(":" + strconv.Itoa(int(configs.App.Port)))
+	if err != nil {
+		log.Fatalln(err)
+	}
 }
