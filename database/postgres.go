@@ -3,10 +3,13 @@ package database
 import (
 	"fmt"
 	"log"
+	"os"
+	"time"
 
 	"github.com/coregate/tickets-app/configs"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 type DatabaseConnection struct {
@@ -42,7 +45,21 @@ func openConnectionPostgres(config Config) (*gorm.DB, error) {
 		config.Host, config.Port, config.User, config.Password, config.Database)
 	fmt.Println(dsn)
 
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	newLogger := logger.New(
+		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
+		logger.Config{
+			SlowThreshold:             time.Second,  // Slow SQL threshold
+			LogLevel:                  logger.Error, // Log level
+			IgnoreRecordNotFoundError: true,         // Ignore ErrRecordNotFound error for logger
+			ParameterizedQueries:      true,         // Don't include params in the SQL log
+			Colorful:                  true,         // Disable color
+		},
+	)
+
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
+		Logger: newLogger,
+	})
+
 	if err != nil {
 		log.Fatalln(err)
 		return nil, err
