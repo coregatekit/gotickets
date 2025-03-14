@@ -6,6 +6,6 @@ const (
 )
 
 const (
-	TableUsers   = SchemaAuth + "users"
-	TableTickets = SchemaTickets + "tickets"
+	TableUsers   = SchemaAuth + ".users"
+	TableTickets = SchemaTickets + ".tickets"
 )

@@ -1,6 +1,7 @@
 package repositoriese
 
 import (
+	"github.com/coregate/tickets-app/database"
 	"github.com/coregate/tickets-app/packages/users"
 	"gorm.io/gorm"
 )
@@ -24,7 +25,7 @@ func (r *UsersRepository) CreateUser(data users.CreateUser) (*users.User, error)
 		Password: data.Password,
 	}
 
-	result := r.dbConnection.Table("auth.users").Create(user)
+	result := r.dbConnection.Table(database.TableUsers).Create(user)
 	if result.Error != nil {
 		return nil, result.Error
 	}
