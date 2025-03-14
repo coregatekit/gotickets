@@ -12,8 +12,12 @@ type IAuthService interface {
 	Register(data CreateUser) error
 }
 
-func NewAuthService(userRepo users.IUserRepository) *AuthService {
+func NewAuthService(userRepo users.IUserRepository) IAuthService {
 	return &AuthService{
 		usersRepository: userRepo,
 	}
+}
+
+func (s *AuthService) Register(data CreateUser) error {
+	return nil
 }
