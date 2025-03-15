@@ -16,6 +16,17 @@ func NewUsersRepository(dbConnection *gorm.DB) *UsersRepository {
 	}
 }
 
+func (r *UsersRepository) GetUserByUsernameOrEmail(username, email string) (*users.User, error) {
+	user := &users.User{}
+
+	result := r.dbConnection.Table(database.TableUsers).Where("username = ? OR email = ?", username, email).First(user)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return user, nil
+}
+
 func (r *UsersRepository) CreateUser(name, username, email, password string) (*users.User, error) {
 	user := &users.User{
 		Name:     name,
