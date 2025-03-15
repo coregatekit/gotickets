@@ -1,6 +1,9 @@
 package handlers
 
 import (
+	"net/http"
+
+	"github.com/coregate/tickets-app/common"
 	"github.com/coregate/tickets-app/packages/auth"
 	"github.com/gin-gonic/gin"
 )
@@ -28,7 +31,9 @@ func NewAuthHandler(authService auth.IAuthService) *AuthHandler {
 // @Failure		500 {object} common.Response "Internal Server Error"
 // @Router			/api/auth/register [post]
 func (h *AuthHandler) Register(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"status": "User registered",
+	c.JSON(http.StatusOK, common.Response{
+		Code:    http.StatusOK,
+		Message: "User registered successfully",
+		Data:    nil,
 	})
 }

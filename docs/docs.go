@@ -109,10 +109,14 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "code": {
+                    "description": "custom code response from the server",
                     "type": "integer"
                 },
-                "data": {},
+                "data": {
+                    "description": "data response from the server"
+                },
                 "message": {
+                    "description": "custom message response from the server",
                     "type": "string"
                 }
             }
