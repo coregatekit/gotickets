@@ -2,6 +2,8 @@ package encryptions
 
 import (
 	"crypto/rand"
+	"encoding/base64"
+	"fmt"
 
 	"golang.org/x/crypto/argon2"
 )
@@ -9,14 +11,14 @@ import (
 type encryptionsService struct{}
 
 type IEncryptionsService interface {
-	HashPassword(password string) ([]byte, error)
+	HashPassword(password string) (string, error)
 }
 
 func NewEncryptionsService() IEncryptionsService {
 	return &encryptionsService{}
 }
 
-func (s *encryptionsService) HashPassword(password string) ([]byte, error) {
+func (s *encryptionsService) HashPassword(password string) (string, error) {
 	p := Params{
 		Memory:      64 * 1024,
 		Iterations:  3,
@@ -27,11 +29,16 @@ func (s *encryptionsService) HashPassword(password string) ([]byte, error) {
 
 	salt, err := s.generateRandomBytes(p.SaltLength)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 
 	hash := argon2.IDKey([]byte(password), salt, p.Iterations, p.Memory, p.Parallelism, p.KeyLength)
-	return hash, nil
+
+	b64Salt := base64.RawStdEncoding.EncodeToString(salt)
+	b64Hash := base64.RawStdEncoding.EncodeToString(hash)
+
+	encodedHash := fmt.Sprintf("$argon2id$v=%d$m=%d,t=%d,p=%d$%s$%s", argon2.Version, p.Memory, p.Iterations, p.Parallelism, b64Salt, b64Hash)
+	return encodedHash, nil
 }
 
 func (s *encryptionsService) generateRandomBytes(n uint32) ([]byte, error) {

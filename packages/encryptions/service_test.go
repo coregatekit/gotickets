@@ -27,6 +27,8 @@ func TestHashPassword(t *testing.T) {
 		// Assert
 		assert.NoError(t, err)
 		assert.NotEmpty(t, hashedPassword)
+		assert.Equal(t, 97, len(hashedPassword))
+
 	})
 
 	t.Run("should return error when cannot generate random bytes", func(t *testing.T) {
