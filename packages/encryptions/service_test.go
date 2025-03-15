@@ -5,6 +5,7 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/coregate/tickets-app/configs"
 	"github.com/coregate/tickets-app/packages/encryptions"
 	"github.com/stretchr/testify/assert"
 )
@@ -16,10 +17,20 @@ func (e *errorReader) Read(p []byte) (n int, err error) {
 }
 
 func TestHashPassword(t *testing.T) {
+	configs := &configs.Configs{
+		Argon: &configs.ArgonParams{
+			Memory:      64 * 1024,
+			Iterations:  3,
+			Parallelism: 2,
+			SaltLength:  16,
+			KeyLength:   32,
+		},
+	}
+
 	t.Run("should hash a password successfully", func(t *testing.T) {
 		// Arrange
 		password := "password"
-		crypto := encryptions.NewEncryptionsService()
+		crypto := encryptions.NewEncryptionsService(configs)
 
 		// Act
 		hashedPassword, err := crypto.HashPassword(password)
@@ -34,7 +45,7 @@ func TestHashPassword(t *testing.T) {
 	t.Run("should return error when cannot generate random bytes", func(t *testing.T) {
 		// Arrange
 		password := "password"
-		crypto := encryptions.NewEncryptionsService()
+		crypto := encryptions.NewEncryptionsService(configs)
 
 		originalReader := rand.Reader
 		defer func() {
@@ -50,3 +61,43 @@ func TestHashPassword(t *testing.T) {
 		assert.Empty(t, hashedPassword)
 	})
 }
+
+// func TestComparePassword(t *testing.T) {
+// 	configs := &configs.Configs{
+// 		Argon: &configs.ArgonParams{
+// 			Memory:      64 * 1024,
+// 			Iterations:  3,
+// 			Parallelism: 2,
+// 			SaltLength:  16,
+// 			KeyLength:   32,
+// 		},
+// 	}
+
+// 	t.Run("should compare password successfully", func(t *testing.T) {
+// 		// Arrange
+// 		password := "password"
+// 		crypto := encryptions.NewEncryptionsService(configs)
+// 		hashedPassword, _ := crypto.HashPassword(password)
+
+// 		// Act
+// 		match, err := crypto.ComparePassword(hashedPassword, password)
+
+// 		// Assert
+// 		assert.NoError(t, err)
+// 		assert.True(t, match)
+// 	})
+
+// 	t.Run("should return false when password does not match", func(t *testing.T) {
+// 		// Arrange
+// 		password := "password"
+// 		crypto := encryptions.NewEncryptionsService(configs)
+// 		hashedPassword, _ := crypto.HashPassword(password)
+
+// 		// Act
+// 		match, err := crypto.ComparePassword(hashedPassword, "wrong-password")
+
+// 		// Assert
+// 		assert.NoError(t, err)
+// 		assert.False(t, match)
+// 	})
+// }

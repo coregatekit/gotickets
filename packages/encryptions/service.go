@@ -5,18 +5,23 @@ import (
 	"encoding/base64"
 	"fmt"
 
+	"github.com/coregate/tickets-app/configs"
 	"golang.org/x/crypto/argon2"
 )
 
-type encryptionsService struct{}
+type encryptionsService struct {
+	configs *configs.Configs
+}
 
 type IEncryptionsService interface {
 	HashPassword(password string) (string, error)
 	ComparePassword(hashedPassword, password string) (bool, error)
 }
 
-func NewEncryptionsService() IEncryptionsService {
-	return &encryptionsService{}
+func NewEncryptionsService(configs *configs.Configs) IEncryptionsService {
+	return &encryptionsService{
+		configs: configs,
+	}
 }
 
 func (s *encryptionsService) HashPassword(password string) (string, error) {
