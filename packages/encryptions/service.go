@@ -2,6 +2,7 @@ package encryptions
 
 import (
 	"crypto/rand"
+	"crypto/subtle"
 	"encoding/base64"
 	"errors"
 	"fmt"
@@ -50,7 +51,18 @@ func (s *encryptionsService) HashPassword(password string) (string, error) {
 }
 
 func (s *encryptionsService) ComparePassword(hashedPassword, password string) (bool, error) {
-	return true, nil
+	p, salt, hash, err := s.decodeHash(hashedPassword)
+	if err != nil {
+		return false, err
+	}
+
+	otherHash := argon2.IDKey([]byte(password), salt, p.Iterations, p.Memory, p.Parallelism, p.KeyLength)
+
+	if subtle.ConstantTimeCompare(hash, otherHash) == 1 {
+		return true, nil
+	}
+
+	return false, nil
 }
 
 func (s *encryptionsService) generateRandomBytes(n uint32) ([]byte, error) {

@@ -62,42 +62,42 @@ func TestHashPassword(t *testing.T) {
 	})
 }
 
-// func TestComparePassword(t *testing.T) {
-// 	configs := &configs.Configs{
-// 		Argon: &configs.ArgonParams{
-// 			Memory:      64 * 1024,
-// 			Iterations:  3,
-// 			Parallelism: 2,
-// 			SaltLength:  16,
-// 			KeyLength:   32,
-// 		},
-// 	}
+func TestComparePassword(t *testing.T) {
+	configs := &configs.Configs{
+		Argon: &configs.ArgonParams{
+			Memory:      64 * 1024,
+			Iterations:  3,
+			Parallelism: 2,
+			SaltLength:  16,
+			KeyLength:   32,
+		},
+	}
 
-// 	t.Run("should compare password successfully", func(t *testing.T) {
-// 		// Arrange
-// 		password := "password"
-// 		crypto := encryptions.NewEncryptionsService(configs)
-// 		hashedPassword, _ := crypto.HashPassword(password)
+	t.Run("should compare password successfully", func(t *testing.T) {
+		// Arrange
+		password := "password"
+		crypto := encryptions.NewEncryptionsService(configs)
+		hashedPassword, _ := crypto.HashPassword(password)
 
-// 		// Act
-// 		match, err := crypto.ComparePassword(hashedPassword, password)
+		// Act
+		match, err := crypto.ComparePassword(hashedPassword, password)
 
-// 		// Assert
-// 		assert.NoError(t, err)
-// 		assert.True(t, match)
-// 	})
+		// Assert
+		assert.NoError(t, err)
+		assert.True(t, match)
+	})
 
-// 	t.Run("should return false when password does not match", func(t *testing.T) {
-// 		// Arrange
-// 		password := "password"
-// 		crypto := encryptions.NewEncryptionsService(configs)
-// 		hashedPassword, _ := crypto.HashPassword(password)
+	t.Run("should return false when password does not match", func(t *testing.T) {
+		// Arrange
+		password := "password"
+		crypto := encryptions.NewEncryptionsService(configs)
+		hashedPassword, _ := crypto.HashPassword(password)
 
-// 		// Act
-// 		match, err := crypto.ComparePassword(hashedPassword, "wrong-password")
+		// Act
+		match, err := crypto.ComparePassword(hashedPassword, "wrong-password")
 
-// 		// Assert
-// 		assert.NoError(t, err)
-// 		assert.False(t, match)
-// 	})
-// }
+		// Assert
+		assert.NoError(t, err)
+		assert.False(t, match)
+	})
+}
