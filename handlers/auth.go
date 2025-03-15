@@ -31,6 +31,25 @@ func NewAuthHandler(authService auth.IAuthService) *AuthHandler {
 // @Failure		500 {object} common.Response "Internal Server Error"
 // @Router			/api/auth/register [post]
 func (h *AuthHandler) Register(c *gin.Context) {
+	var createUser auth.CreateUser
+	if err := c.ShouldBindJSON(&createUser); err != nil {
+		c.JSON(http.StatusBadRequest, common.Response{
+			Code:    http.StatusBadRequest,
+			Message: err.Error(),
+			Data:    nil,
+		})
+		return
+	}
+
+	if err := h.authService.Register(createUser); err != nil {
+		c.JSON(http.StatusInternalServerError, common.Response{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+			Data:    nil,
+		})
+		return
+	}
+
 	c.JSON(http.StatusOK, common.Response{
 		Code:    http.StatusOK,
 		Message: "User registered successfully",
