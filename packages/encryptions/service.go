@@ -12,6 +12,7 @@ type encryptionsService struct{}
 
 type IEncryptionsService interface {
 	HashPassword(password string) (string, error)
+	ComparePassword(hashedPassword, password string) (bool, error)
 }
 
 func NewEncryptionsService() IEncryptionsService {
@@ -39,6 +40,10 @@ func (s *encryptionsService) HashPassword(password string) (string, error) {
 
 	encodedHash := fmt.Sprintf("$argon2id$v=%d$m=%d,t=%d,p=%d$%s$%s", argon2.Version, p.Memory, p.Iterations, p.Parallelism, b64Salt, b64Hash)
 	return encodedHash, nil
+}
+
+func (s *encryptionsService) ComparePassword(hashedPassword, password string) (bool, error) {
+	return true, nil
 }
 
 func (s *encryptionsService) generateRandomBytes(n uint32) ([]byte, error) {
