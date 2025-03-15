@@ -25,13 +25,7 @@ func NewEncryptionsService(configs *configs.Configs) IEncryptionsService {
 }
 
 func (s *encryptionsService) HashPassword(password string) (string, error) {
-	p := Params{
-		Memory:      64 * 1024,
-		Iterations:  3,
-		Parallelism: 2,
-		SaltLength:  16,
-		KeyLength:   32,
-	}
+	p := s.configs.Argon
 
 	salt, err := s.generateRandomBytes(p.SaltLength)
 	if err != nil {

@@ -21,7 +21,7 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	routes.RegisterRoutes(server, dbConnection.DB)
+	routes.RegisterRoutes(server, dbConnection.DB, configs)
 	server.GET("/api/docs", func(c *gin.Context) {
 		htmlContent, err := scalar.ApiReferenceHTML(&scalar.Options{
 			SpecURL: "./docs/swagger.json",
