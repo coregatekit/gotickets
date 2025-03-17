@@ -18,6 +18,8 @@ func TestRegister(t *testing.T) {
 			Password: "password",
 		}
 		mockUserRepo := new(fakes.IUserRepository)
+		mockUserRepo.On("GetUserByUsernameOrEmail", newUser.Username, newUser.Email).Return(nil, nil)
+
 		mockEncryptionSvc := new(fakes.IEncryptionsService)
 
 		service := auth.NewAuthService(mockUserRepo, mockEncryptionSvc)
@@ -27,5 +29,6 @@ func TestRegister(t *testing.T) {
 
 		// Assert
 		assert.NoError(t, err)
+		mockUserRepo.AssertCalled(t, "GetUserByUsernameOrEmail", newUser.Username, newUser.Email)
 	})
 }

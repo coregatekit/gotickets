@@ -3,6 +3,7 @@ package auth
 import (
 	"github.com/coregate/tickets-app/packages/encryptions"
 	"github.com/coregate/tickets-app/packages/users"
+	"github.com/pkg/errors"
 )
 
 type authService struct {
@@ -22,5 +23,14 @@ func NewAuthService(userRepo users.IUserRepository, encryptionsService encryptio
 }
 
 func (s *authService) Register(data CreateUser) error {
+	existingUser, err := s.usersRepository.GetUserByUsernameOrEmail(data.Username, data.Email)
+	if err != nil {
+		return errors.Wrap(err, "failed to get user by username or email")
+	}
+
+	if existingUser != nil {
+		return errors.New("username or email already exists")
+	}
+
 	return nil
 }
