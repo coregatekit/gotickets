@@ -100,4 +100,17 @@ func TestComparePassword(t *testing.T) {
 		assert.NoError(t, err)
 		assert.False(t, match)
 	})
+
+	t.Run("should return error when cannot decode hash", func(t *testing.T) {
+		// Arrange
+		password := "password"
+		crypto := encryptions.NewEncryptionsService(configs)
+
+		// Act
+		match, err := crypto.ComparePassword("invalid-hash", password)
+
+		// Assert
+		assert.Error(t, err)
+		assert.False(t, match)
+	})
 }
