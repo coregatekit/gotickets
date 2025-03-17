@@ -26,6 +26,11 @@ test:
 	go test -race -cover ./... -count=1 -failfast
 	golangci-lint run
 
+mock:
+	mockery --dir=packages --all --recursive --output=tests/fakes  --outpkg=fakes
+	mockery --dir=libs --all --recursive --output=tests/fakes  --outpkg=fakes
+	mockery --dir=database --all --recursive --output=tests/fakes  --outpkg=fakes
+
 lint:
 	golangci-lint run 
 
