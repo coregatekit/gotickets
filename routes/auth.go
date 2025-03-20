@@ -4,8 +4,8 @@ import (
 	"github.com/coregate/tickets-app/configs"
 	"github.com/coregate/tickets-app/database/repos"
 	"github.com/coregate/tickets-app/handlers"
-	"github.com/coregate/tickets-app/packages/auth"
-	"github.com/coregate/tickets-app/packages/encryptions"
+	"github.com/coregate/tickets-app/pkg/auth"
+	"github.com/coregate/tickets-app/pkg/encryptions"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )

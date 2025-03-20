@@ -1,8 +1,8 @@
 package auth
 
 import (
-	"github.com/coregate/tickets-app/packages/encryptions"
-	"github.com/coregate/tickets-app/packages/users"
+	"github.com/coregate/tickets-app/pkg/encryptions"
+	"github.com/coregate/tickets-app/pkg/users"
 	"github.com/pkg/errors"
 )
 

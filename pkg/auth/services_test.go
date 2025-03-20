@@ -4,8 +4,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/coregate/tickets-app/packages/auth"
-	"github.com/coregate/tickets-app/packages/users"
+	"github.com/coregate/tickets-app/pkg/auth"
+	"github.com/coregate/tickets-app/pkg/users"
 	"github.com/coregate/tickets-app/tests/fakes"
 	"github.com/stretchr/testify/assert"
 )

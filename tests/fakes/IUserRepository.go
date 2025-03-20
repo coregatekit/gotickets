@@ -3,7 +3,7 @@
 package fakes
 
 import (
-	users "github.com/coregate/tickets-app/packages/users"
+	users "github.com/coregate/tickets-app/pkg/users"
 	mock "github.com/stretchr/testify/mock"
 )
 

@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/coregate/tickets-app/common"
-	"github.com/coregate/tickets-app/packages/auth"
+	"github.com/coregate/tickets-app/pkg/auth"
 	"github.com/gin-gonic/gin"
 )
 
