@@ -1,6 +1,8 @@
 package auth
 
 import (
+	"fmt"
+
 	"github.com/coregate/tickets-app/pkg/encrypt"
 	"github.com/coregate/tickets-app/pkg/users"
 	"github.com/pkg/errors"
@@ -31,6 +33,13 @@ func (s *authService) Register(data CreateUser) error {
 	if existingUser != nil {
 		return errors.New("username or email already exists")
 	}
+
+	hashedPassword, err := s.encryptionsService.HashPassword(data.Password)
+	if err != nil {
+		return errors.Wrap(err, "failed to hash password")
+	}
+
+	fmt.Printf("Hashed password: %s\n", hashedPassword)
 
 	return nil
 }
