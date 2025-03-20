@@ -36,7 +36,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/auth.CreateUser"
+                            "$ref": "#/definitions/github_com_coregate_tickets-app_pkg_auth.CreateUser"
                         }
                     }
                 ],
@@ -88,23 +88,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "auth.CreateUser": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                },
-                "username": {
-                    "type": "string"
-                }
-            }
-        },
         "common.Response": {
             "type": "object",
             "properties": {
@@ -117,6 +100,23 @@ const docTemplate = `{
                 },
                 "message": {
                     "description": "custom message response from the server",
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_coregate_tickets-app_pkg_auth.CreateUser": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "username": {
                     "type": "string"
                 }
             }

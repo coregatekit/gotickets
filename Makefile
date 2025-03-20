@@ -12,15 +12,15 @@ export DB_PASSWORD=3lMSkQr1wg7
 export DB_NAME=tickets
 
 run:
-	swag init -g main.go --parseDependency --output docs/
-	go run main.go
+	swag init -g cmd/api/main.go --parseDependency --output docs/
+	go run cmd/api/main.go
 
 build:
 	rm -rf bin
-	go build -o bin/main main.go
+	go build -o bin/main cmd/api/main.go
 
 gen-openapi:
-	swag init -g main.go --parseDependency --output docs/
+	swag init -g cmd/api/main.go --parseDependency --output docs/
 
 test:
 	go test -race -cover ./... -count=1 -failfast
