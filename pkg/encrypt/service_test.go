@@ -1,4 +1,4 @@
-package encryptions_test
+package encrypt_test
 
 import (
 	"crypto/rand"
@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/coregate/tickets-app/configs"
-	"github.com/coregate/tickets-app/packages/encryptions"
+	"github.com/coregate/tickets-app/pkg/encrypt"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -30,7 +30,7 @@ func TestHashPassword(t *testing.T) {
 	t.Run("should hash a password successfully", func(t *testing.T) {
 		// Arrange
 		password := "password"
-		crypto := encryptions.NewEncryptionsService(configs)
+		crypto := encrypt.NewEncryptionsService(configs)
 
 		// Act
 		hashedPassword, err := crypto.HashPassword(password)
@@ -45,7 +45,7 @@ func TestHashPassword(t *testing.T) {
 	t.Run("should return error when cannot generate random bytes", func(t *testing.T) {
 		// Arrange
 		password := "password"
-		crypto := encryptions.NewEncryptionsService(configs)
+		crypto := encrypt.NewEncryptionsService(configs)
 
 		originalReader := rand.Reader
 		defer func() {
@@ -76,7 +76,7 @@ func TestComparePassword(t *testing.T) {
 	t.Run("should compare password successfully", func(t *testing.T) {
 		// Arrange
 		password := "password"
-		crypto := encryptions.NewEncryptionsService(configs)
+		crypto := encrypt.NewEncryptionsService(configs)
 		hashedPassword, _ := crypto.HashPassword(password)
 
 		// Act
@@ -90,7 +90,7 @@ func TestComparePassword(t *testing.T) {
 	t.Run("should return false when password does not match", func(t *testing.T) {
 		// Arrange
 		password := "password"
-		crypto := encryptions.NewEncryptionsService(configs)
+		crypto := encrypt.NewEncryptionsService(configs)
 		hashedPassword, _ := crypto.HashPassword(password)
 
 		// Act
@@ -104,7 +104,7 @@ func TestComparePassword(t *testing.T) {
 	t.Run("should return error when cannot decode hash", func(t *testing.T) {
 		// Arrange
 		password := "password"
-		crypto := encryptions.NewEncryptionsService(configs)
+		crypto := encrypt.NewEncryptionsService(configs)
 
 		// Act
 		match, err := crypto.ComparePassword("invalid-hash", password)

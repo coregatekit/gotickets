@@ -1,21 +1,21 @@
 package auth
 
 import (
-	"github.com/coregate/tickets-app/pkg/encryptions"
+	"github.com/coregate/tickets-app/pkg/encrypt"
 	"github.com/coregate/tickets-app/pkg/users"
 	"github.com/pkg/errors"
 )
 
 type authService struct {
 	usersRepository    users.IUserRepository
-	encryptionsService encryptions.IEncryptionsService
+	encryptionsService encrypt.IEncryptionsService
 }
 
 type IAuthService interface {
 	Register(data CreateUser) error
 }
 
-func NewAuthService(userRepo users.IUserRepository, encryptionsService encryptions.IEncryptionsService) IAuthService {
+func NewAuthService(userRepo users.IUserRepository, encryptionsService encrypt.IEncryptionsService) IAuthService {
 	return &authService{
 		usersRepository:    userRepo,
 		encryptionsService: encryptionsService,

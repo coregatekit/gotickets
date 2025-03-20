@@ -5,7 +5,7 @@ import (
 	"github.com/coregate/tickets-app/database/repos"
 	"github.com/coregate/tickets-app/handlers"
 	"github.com/coregate/tickets-app/pkg/auth"
-	"github.com/coregate/tickets-app/pkg/encryptions"
+	"github.com/coregate/tickets-app/pkg/encrypt"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -13,7 +13,7 @@ import (
 func AuthRoutes(server *gin.Engine, db *gorm.DB, configs *configs.Configs) {
 	userRepo := repos.NewUsersRepository(db)
 
-	encryptionsService := encryptions.NewEncryptionsService(configs)
+	encryptionsService := encrypt.NewEncryptionsService(configs)
 
 	authService := auth.NewAuthService(userRepo, encryptionsService)
 

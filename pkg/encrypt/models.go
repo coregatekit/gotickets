@@ -1,4 +1,4 @@
-package encryptions
+package encrypt
 
 type Params struct {
 	Memory      uint32

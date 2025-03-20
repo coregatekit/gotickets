@@ -1,4 +1,4 @@
-package encryptions
+package encrypt
 
 import (
 	"crypto/rand"
