@@ -21,6 +21,9 @@ func (r *UsersRepository) GetUserByUsernameOrEmail(username, email string) (*use
 
 	result := r.dbConnection.Table(database.TableUsers).Where("username = ? OR email = ?", username, email).First(user)
 	if result.Error != nil {
+		if result.Error == gorm.ErrRecordNotFound {
+			return nil, nil
+		}
 		return nil, result.Error
 	}
 
