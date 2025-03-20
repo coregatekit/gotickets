@@ -14,7 +14,7 @@ import (
 
 func main() {
 	configs := configs.NewConfigs()
-	server := gin.New()
+	server := gin.Default()
 
 	dbConnection, err := database.NewPostgres(configs)
 	if err != nil {
