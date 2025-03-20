@@ -21,6 +21,13 @@ func TestRegister(t *testing.T) {
 		}
 		mockUserRepo := new(fakes.IUserRepository)
 		mockUserRepo.On("GetUserByUsernameOrEmail", newUser.Username, newUser.Email).Return(nil, nil)
+		mockUserRepo.On("CreateUser", newUser.Name, newUser.Username, newUser.Email, "hashed_password").
+			Return(&users.User{
+				Email:    newUser.Email,
+				Name:     newUser.Name,
+				Username: newUser.Username,
+				Password: "hashed_password",
+			}, nil)
 
 		mockEncryptionSvc := new(fakes.IEncryptionsService)
 		mockEncryptionSvc.On("HashPassword", newUser.Password).Return("hashed_password", nil)
@@ -34,6 +41,7 @@ func TestRegister(t *testing.T) {
 		assert.NoError(t, err)
 		mockUserRepo.AssertCalled(t, "GetUserByUsernameOrEmail", newUser.Username, newUser.Email)
 		mockEncryptionSvc.AssertCalled(t, "HashPassword", newUser.Password)
+		mockUserRepo.AssertCalled(t, "CreateUser", newUser.Name, newUser.Username, newUser.Email, "hashed_password")
 	})
 
 	t.Run("should return error when an error occured while getting user by username or email", func(t *testing.T) {
