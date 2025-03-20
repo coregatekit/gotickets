@@ -1,4 +1,4 @@
-package repositoriese
+package repos
 
 import (
 	"github.com/coregate/tickets-app/database"
