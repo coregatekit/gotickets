@@ -86,4 +86,30 @@ func TestRegister(t *testing.T) {
 		mockUserRepo.AssertCalled(t, "GetUserByUsernameOrEmail", newUser.Username, newUser.Email)
 
 	})
+
+	t.Run("should return error when failed to hash password", func(t *testing.T) {
+		// Arrange
+		newUser := auth.CreateUser{
+			Email:    "aerichan@coregate.dev",
+			Name:     "Uchinaga Aeri",
+			Username: "aerichandesu",
+			Password: "password",
+		}
+
+		mockUserRepo := new(fakes.IUserRepository)
+		mockUserRepo.On("GetUserByUsernameOrEmail", newUser.Username, newUser.Email).Return(nil, nil)
+
+		mockEncryptionSvc := new(fakes.IEncryptionsService)
+		mockEncryptionSvc.On("HashPassword", newUser.Password).Return("", errors.New("some error"))
+
+		service := auth.NewAuthService(mockUserRepo, mockEncryptionSvc)
+
+		// Act
+		err := service.Register(newUser)
+
+		// Assert
+		assert.Error(t, err)
+		mockUserRepo.AssertCalled(t, "GetUserByUsernameOrEmail", newUser.Username, newUser.Email)
+		mockEncryptionSvc.AssertCalled(t, "HashPassword", newUser.Password)
+	})
 }
