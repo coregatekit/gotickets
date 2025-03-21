@@ -20,6 +20,11 @@ definitions:
         type: string
       username:
         type: string
+    required:
+    - email
+    - name
+    - password
+    - username
     type: object
 info:
   contact: {}

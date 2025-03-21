@@ -106,6 +106,12 @@ const docTemplate = `{
         },
         "github_com_coregate_tickets-app_pkg_auth.CreateUser": {
             "type": "object",
+            "required": [
+                "email",
+                "name",
+                "password",
+                "username"
+            ],
             "properties": {
                 "email": {
                     "type": "string"
