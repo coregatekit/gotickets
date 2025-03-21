@@ -1,0 +1,17 @@
+###
+# Check the health of the API
+###
+GET http://localhost:8000/api/health http/1.1
+
+###
+# Register a new user
+###
+POST http://localhost:8000/api/auth/register HTTP/1.1
+content-type: application/json
+
+{
+    "name": "John Doe",
+    "email": "",
+    "password": "password",
+    "username": "johndoe"
+}
