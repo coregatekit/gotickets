@@ -56,3 +56,34 @@ func (h *AuthHandler) Register(c *gin.Context) {
 		Data:    nil,
 	})
 }
+
+// GoTemplate 	godoc
+// @Summary		Login
+// @Description	Login user
+// @ID 			Login
+// @Tags        Auth
+// @Accept		json
+// @Produce		json
+// @Param		body body auth.LoginRequest true "User data"
+// @Success 	200 {object} common.Response "OK"
+// @Failure		400 {object} common.Response "Bad Request"
+// @Failure		500 {object} common.Response "Internal Server Error"
+// @Router			/api/auth/login [post]
+func (h *AuthHandler) Login(c *gin.Context) {
+	var loginRequest auth.LoginRequest
+	if err := c.ShouldBindJSON(&loginRequest); err != nil {
+		c.JSON(http.StatusBadRequest, common.Response{
+			Code:    http.StatusBadRequest,
+			Message: err.Error(),
+			Data:    nil,
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, common.Response{
+		Code:    http.StatusOK,
+		Message: "User logged in successfully",
+		Data:    nil,
+	})
+
+}

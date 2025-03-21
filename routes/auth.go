@@ -21,5 +21,6 @@ func AuthRoutes(server *gin.Engine, db *gorm.DB, configs *configs.Configs) {
 	authRoutes := server.Group("/api/auth")
 	{
 		authRoutes.POST("/register", authHandler.Register)
+		authRoutes.POST("/login", authHandler.Login)
 	}
 }
