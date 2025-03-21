@@ -17,9 +17,19 @@ func NewUsersRepository(dbConnection *gorm.DB) *UsersRepository {
 }
 
 func (r *UsersRepository) GetUserByUsernameOrEmail(username, email string) (*users.User, error) {
-	user := &users.User{}
+	user := users.User{}
 
-	result := r.dbConnection.Table(database.TableUsers).Where("username = ? OR email = ?", username, email).First(user)
+	query := r.dbConnection.Table(database.TableUsers)
+
+	if username != "" {
+		query = query.Where("username = ?", username)
+	}
+	if email != "" {
+		query = query.Or("email = ?", email)
+	}
+
+	result := query.First(&user)
+
 	if result.Error != nil {
 		if result.Error == gorm.ErrRecordNotFound {
 			return nil, nil
@@ -27,7 +37,7 @@ func (r *UsersRepository) GetUserByUsernameOrEmail(username, email string) (*use
 		return nil, result.Error
 	}
 
-	return user, nil
+	return &user, nil
 }
 
 func (r *UsersRepository) CreateUser(name, username, email, password string) (*users.User, error) {
