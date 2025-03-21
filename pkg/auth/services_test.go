@@ -149,3 +149,36 @@ func TestRegister(t *testing.T) {
 		mockUserRepo.AssertCalled(t, "CreateUser", newUser.Name, newUser.Username, newUser.Email, "hashed_password")
 	})
 }
+
+func TestLogin(t *testing.T) {
+	t.Run("should login user successfully", func(t *testing.T) {
+		// Arrange
+		loginRequest := auth.LoginRequest{
+			Username: "aerichandesu",
+			Password: "password",
+		}
+
+		mockUserRepo := new(fakes.IUserRepository)
+		mockUserRepo.On("GetUserByUsernameOrEmail", loginRequest.Username, "").
+			Return(&users.User{
+				Email:    "aerichan@coregate.dev",
+				Name:     "Uchinaga Aeri",
+				Username: "aerichandesu",
+				Password: "hashed_password",
+			}, nil)
+
+		mockEncryptionSvc := new(fakes.IEncryptionsService)
+		mockEncryptionSvc.On("ComparePassword", loginRequest.Password, "hashed_password").Return(true, nil)
+
+		service := auth.NewAuthService(mockUserRepo, mockEncryptionSvc)
+
+		// Act
+		result, err := service.Login(loginRequest)
+
+		// Assert
+		assert.NoError(t, err)
+		assert.NotNil(t, result)
+		assert.NotEmpty(t, result.Token)
+		assert.NotEmpty(t, result.RefreshToken)
+	})
+}
