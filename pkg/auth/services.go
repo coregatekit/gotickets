@@ -13,6 +13,7 @@ type authService struct {
 
 type IAuthService interface {
 	Register(data CreateUser) error
+	Login(data LoginRequest) (*LoginResult, error)
 }
 
 func NewAuthService(userRepo users.IUserRepository, encryptionsService encrypt.IEncryptionsService) IAuthService {
@@ -27,7 +28,6 @@ func (s *authService) Register(data CreateUser) error {
 	if err != nil {
 		return errors.Wrap(err, "failed to get user by username or email")
 	}
-
 	if existingUser != nil {
 		return errors.New("username or email already exists")
 	}
@@ -43,4 +43,8 @@ func (s *authService) Register(data CreateUser) error {
 	}
 
 	return nil
+}
+
+func (s *authService) Login(data LoginRequest) (*LoginResult, error) {
+	return nil, nil
 }

@@ -80,10 +80,20 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 
+	result, err := h.authService.Login(loginRequest)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, common.Response{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+			Data:    nil,
+		})
+		return
+	}
+
 	c.JSON(http.StatusOK, common.Response{
 		Code:    http.StatusOK,
 		Message: "User logged in successfully",
-		Data:    nil,
+		Data:    result,
 	})
 
 }
